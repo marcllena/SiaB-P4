@@ -1,0 +1,98 @@
+{
+  "apps" : {
+    "org.opencord.kafka" : {
+      "kafka" : {
+        "bootstrapServers" : "cord-kafka.default.svc.cluster.local:9092"
+      }
+    },
+    "org.opencord.dhcpl2relay" : {
+      "dhcpl2relay" : {
+        "dhcpServerConnectPoints" : [ "device:agg1" ],
+        "useOltUplinkForServerPktInOut" : false
+      }
+    },
+    "org.opencord.aaa" : {
+      "AAA" : {
+        "radiusSecret" : "SECRET",
+        "radiusConnectionType" : "socket",
+        "radiusHost" : "freeradius.voltha.svc.cluster.local",
+        "radiusServerPort" : "1812"
+      }
+    },
+    "org.onosproject.provider.lldp" : {
+      "suppression" : {
+        "deviceTypes" : [ "ROADM", "OTN", "FIBER_SWITCH", "OPTICAL_AMPLIFIER", "OLS", "TERMINAL_DEVICE" ],
+        "annotation" : "{\"no-lldp\":null}"
+      }
+    },
+    "org.opencord.sadis" : {
+      "bandwidthprofile" : {
+        "integration" : {
+          "url" : "http://sadis-service:8000/bandwidthprofiles/%s",
+          "cache" : {
+            "maxsize" : 40,
+            "enabled" : true,
+            "ttl" : "PT1m"
+          }
+        }
+      },
+      "sadis" : {
+        "integration" : {
+          "url" : "http://sadis-service:8000/subscriber/%s",
+          "cache" : {
+            "maxsize" : 1000,
+            "ttl" : "PT300S"
+          }
+        }
+      }
+    }
+  },
+  "ports" : {
+     "device:agg1/1" : {
+       "interfaces" : [ ],
+       "hostLearning" : {
+         "enabled" : true
+       }
+     },
+     "device:agg1/2" : {
+       "interfaces" : [ ],
+       "hostLearning" : {
+         "enabled" : false
+       }
+     }
+  },
+  "links" : { },
+  "regions" : { },
+  "devices" : {
+    "device:agg1" : {
+      "segmentrouting" : {
+        "ipv4NodeSid" : 17,
+        "name" : "leaf_1",
+        "ipv4Loopback" : "192.168.0.201",
+        "adjacencySids" : [ ],
+        "isEdgeRouter" : true,
+        "routerMac" : "00:00:02:01:06:01"
+      },
+      "basic" : {
+        "managementAddress" : "grpc://mininet-stratum:50001?device_id=1",
+        "driver" : "stratum-bmv2",
+        "name" : "leaf_1",
+        "pipeconf" : "org.onosproject.pipelines.fabric"
+      }
+    },
+    "of:0000d0d3e158fede" : {
+      "classifiers" : [ {
+        "ethernet-type" : "LLDP",
+        "target-queue" : 0
+      }, {
+        "ethernet-type" : "BDDP",
+        "target-queue" : 0
+      } ],
+      "basic" : {
+        "name" : "PONSIM OLT 0"
+      }
+    }
+  },
+  "layouts" : { },
+  "hosts" : { }
+}
