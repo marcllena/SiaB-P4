@@ -74,7 +74,7 @@
         "routerMac" : "00:00:02:01:06:01"
       },
       "basic" : {
-        "managementAddress" : "grpc://mininet-stratum:50001?device_id=1",
+        "managementAddress" : "grpc://mininet-bmv2-stratum:50001?device_id=1",
         "driver" : "stratum-bmv2",
         "name" : "leaf_1",
         "pipeconf" : "org.onosproject.pipelines.fabric"
